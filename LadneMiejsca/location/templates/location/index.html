@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Places</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #87CEEB;
+            color: #333;
+            background-image: url("{% static 'location/images/Brzeg.jpg' %}");
+            background-position: center;
+        }
+        h1 {
+            text-align: center;
+            color: #87CEEB;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4682B4;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 30px;
+        }
+
+        p {
+            color: #FFFAFA;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+        }
+
+        .button-container {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        }
+
+         .button {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 10px 10px;
+        margin: 10px;
+        background-color: #708090;
+        color: #FFF;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <p>Welcome at the dark side of the moon ;)</p>
+    <p>Here you can find soome interesting photos of beautifull places around the world!</p>
+    <p>Now take a deep breath and enjoy</p>
+    <h2>Places</h2>
+    <ol>
+    {% for place in places %}
+        <nav><a href="/{{ place|safe }}/" class="button">{{ place|title }}</a></nav>
+    {% endfor %}
+    </ol>
+</body>
+</html>

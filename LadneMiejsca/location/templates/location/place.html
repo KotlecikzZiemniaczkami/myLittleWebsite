@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Places</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFDEAD;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #8B4513;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 40px;
+        }
+        p {
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>{{place}}</h1>
+    <img src="{% static image %}" alt="Beautiful place" style="display: block; margin: 0 auto;" width="600">
+    <p>{{descryption|safe}}</p>
+</body>
+</html>
