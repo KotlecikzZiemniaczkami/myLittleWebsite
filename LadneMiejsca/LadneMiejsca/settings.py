@@ -129,7 +129,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'filters': {
         'request_ip': {
-            '()': 'myapp.filters.RequestFilter',
+            '()': 'LadneMiejsca.filters.RequestFilter',
         },
     },
     'formatters': {
