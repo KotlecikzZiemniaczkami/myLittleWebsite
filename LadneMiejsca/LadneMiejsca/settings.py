@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure-(em9e5bseh#-x5ewgb-c6up15v&gxkzoefw*-2t=+@&-c(7hv9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -122,3 +123,50 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# new filtr
+class RequestFilter(logging.Filter):
+    def filter(self, record):
+        try:
+            from django.utils.log import RequestLogRecord
+            request = getattr(record, 'request', None)
+            if request:
+                record.ip = request.META.get('REMOTE_ADDR', 'unknown')  # taking IP
+            else:
+                record.ip = 'no_request'
+        except Exception as e:
+            record.ip = 'error'
+        return True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'request_ip': {
+            '()': 'path.to.your.module.RequestFilter',  # Wskaż lokalizację klasy
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message} [IP: {ip}]',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'django_with_ip.log',
+            'formatter': 'verbose',
+            'filters': ['request_ip'],
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
