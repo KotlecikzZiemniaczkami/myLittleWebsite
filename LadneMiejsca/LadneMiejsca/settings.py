@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-(em9e5bseh#-x5ewgb-c6up15v&gxkzoefw*-2t=+@&-c(7hv9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -143,7 +143,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'filters': {
         'request_ip': {
-            '()': 'path.to.your.module.RequestFilter',  # Wskaż lokalizację klasy
+            'settings.py': 'path.to.your.module.RequestFilter',
         },
     },
     'formatters': {
