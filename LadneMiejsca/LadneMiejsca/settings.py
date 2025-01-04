@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-(em9e5bseh#-x5ewgb-c6up15v&gxkzoefw*-2t=+@&-c(7hv9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -135,7 +135,7 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message} [IP: {ip}]',
+            'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
     },
@@ -154,6 +154,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False
+        }
     },
 }
 
