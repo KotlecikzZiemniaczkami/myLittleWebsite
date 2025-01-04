@@ -124,26 +124,12 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# new filtr
-class RequestFilter(logging.Filter):
-    def filter(self, record):
-        try:
-            from django.utils.log import RequestLogRecord
-            request = getattr(record, 'request', None)
-            if request:
-                record.ip = request.META.get('REMOTE_ADDR', 'unknown')  # taking IP
-            else:
-                record.ip = 'no_request'
-        except Exception as e:
-            record.ip = 'error'
-        return True
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
         'request_ip': {
-            'settings.py': 'path.to.your.module.RequestFilter',
+            '()': 'myapp.filters.RequestFilter',
         },
     },
     'formatters': {
@@ -156,7 +142,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'django_with_ip.log',
+            'filename': '/var/log/myLittleWebsite.log',
             'formatter': 'verbose',
             'filters': ['request_ip'],
         },
