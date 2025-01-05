@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import logging
+from logging.handlers import SysLogHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,27 +136,28 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
+            'format': '{levelname} {asctime} {module} {message} [Django Log]',
             'style': '{',
         },
     },
     'handlers': {
-        'file': {
+        'syslog': {
             'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/myLittleWebsite.log',
+            'class': 'logging.handlers.SysLogHandler',
+            'address': '/dev/log',
             'formatter': 'verbose',
             'filters': ['request_ip'],
+            'facility': 'local1',
         },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['file'],
+            'handlers': ['syslog'],
             'level': 'INFO',
             'propagate': False,
         },
         'django': {
-            'handlers': ['file'],
+            'handlers': ['syslog'],
             'level': 'INFO',
             'propagate': False
         }
